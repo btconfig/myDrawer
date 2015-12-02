@@ -1,8 +1,14 @@
 <div id="content" class="content">
 	<table style="width: 100%;">
 		<tr>
-			<td style="border-bottom:1px solid #F1F1F1;padding: 5px;">
-				<textarea ng-model="newItem.description" style="border: none;resize: none;width: 100%;"></textarea>
+			<td style="padding:5px; padding-top:10px;">
+				<button style="float:left;" class="colorBkCancel" ng-click="">取消</button>
+				<button style="float:right;" class="colorBkSure" ng-click="">保存</button>
+			</td>
+		</tr>
+		<tr>
+			<td style="padding: 5px;">
+				<textarea ng-model="newItem.description" style="border: 1px solid #F1F1F1;resize: none;width: calc(100% - 5px);height: 140px;"></textarea>
 			</td>
 		</tr>
 		<tr>
