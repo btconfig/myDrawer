@@ -1,8 +1,12 @@
 <div id="content" class="content">
-	<div>item list</div>
-	<ul>                                                    
-		<li ng-repeat="pic in picList track by $index">     
-			<img src="pic" />                               
-		</li>                                               
-	</ul>                                                   
-</div>                                                      
+	<table>
+		<tr ng-repeat="item in itemList track by $index">
+			<td>
+				<img class="list-table-img" ng-src="{{item.picPath}}" />			
+			</td>
+			<td class="list-table-description">
+				<p style="padding: 0; margin: 0;">{{item.date}}</p>
+			</td>
+		</tr>
+	</table>
+</div>

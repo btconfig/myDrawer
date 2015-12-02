@@ -1,5 +1,15 @@
 <div id="content" class="content">
-	<textarea style="resize: none;"
-		ng-model="newItem.description"></textarea>
-	<img src="./img/plus.png" style="width: 100%; border: 1px solid #f1f1f1;" alt="添加图片"/>
+	<table style="width: 100%;">
+		<tr>
+			<td style="border-bottom:1px solid #F1F1F1;padding: 5px;">
+				<textarea ng-model="newItem.description" style="border: none;resize: none;width: 100%;"></textarea>
+			</td>
+		</tr>
+		<tr>
+			<td style="padding: 5px;">
+				<img ng-click="getImage()" style="width: 100%;"
+					src="./img/plus.png" class="newItem-addImg" alt="添加图片"/>
+			</td>
+		</tr>
+	</table>
 </div>

@@ -1,6 +1,16 @@
 * {
 	color: darkslategrey;
 }
+/**
+ * overall
+ */
+.content {
+	padding-top: 44px;
+	text-align: left;
+}
+/**
+ * css of containers
+ */
 .headerContainer {
 	background-color:#f1f1f1; 
 	height: 50px; 
@@ -16,4 +26,21 @@
 	font-size: 34px;
 	background-color: #f1f1f1; 
 	text-align: center; 
+}
+
+/**
+ * list.html
+ */
+.list-table-img {
+	height: 100px;
+}
+.list-table-description {
+	vertical-align: top;
+}
+/**
+ * newItem.html
+ */
+.newItem-addImg {
+	width: 100%; 
+	border: 1px solid #f1f1f1;
 }

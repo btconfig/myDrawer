@@ -1,28 +1,79 @@
 var myDrawerApp = angular.module('myDrawerApp', ['ui.router']);
 
-myDrawerApp.controller('mainCtrl', ['$scope', '$state', function($scope,$state) {
+/**
+ * app service
+ */
+myDrawerApp.service('drawerService', ['$rootScope', '$interval', function($rootScope,$interval) {
+	var serviceFunc = {};
+	
+	// service functions
+	serviceFunc.updateList = function() {
+		var listLen = plus.storage.getLength();
+		for(var i = 0; i < listLen; i ++) {
+			var keyName = plus.storage.key(i);
+			var valueObj = plus.storage.getItem(keyName);
+			var value = JSON.parse(valueObj);
+			$rootScope.itemList.push(value);
+		}
+	};
+	
+	// service initialization
+	var stop = $interval(function() {
+		if(window.plus){
+			$rootScope.itemList = [];
+			serviceFunc.updateList();
+			$interval.cancel(stop);
+		}
+	}, 100);
+	
+	return serviceFunc;
+}]);
+
+/**
+ * main controller
+ */
+myDrawerApp.controller('mainCtrl', ['$scope', '$state', 'drawerService', function($scope,$state,drawerService) {
 	$scope.ifNewItemState = false;
 	$scope.addNewItem = function () {
 		$state.go('newItem');
 		$scope.ifNewItemState = true;
-	}
-	$scope.listItem = function () {
+	};
+	$scope.goTolistPage = function () {
 		$state.go('list');
 		$scope.ifNewItemState = false;
-	}
+	};
 }]);
 
-myDrawerApp.controller('listCtrl',['$scope' ,function($scope) {
-	$scope.picList = [];
-	$scope.hello = function () {
-		alert('hello');
+/**
+ * list controller
+ */
+myDrawerApp.controller('listCtrl',['$scope', 'drawerService',function($scope,drawerService) {
+}]);
+
+/**
+ * new item controller
+ */
+myDrawerApp.controller('newItemCtrl', ['$scope', 'drawerService', function($scope, drawerService) {
+	$scope.newItem = {
+		"description": ""
 	};
-	// 拍照
+	// take a photo
 	$scope.getImage = function() {
 		var cmr = plus.camera.getCamera();
 		cmr.captureImage( function ( p ) {
 			plus.io.resolveLocalFileSystemURL( p, function ( entry ) {
-				$scope.picList.push(entry.toLocalURL());
+				var dateObj = new Date();
+				$scope.newItem.date = dateObj.getFullYear() + '-'
+									  	+ (dateObj.getMonth() + 1) + '-'
+									  	+ dateObj.getDate() + ' '
+									  	+ dateObj.getHours() + ':'
+									  	+ dateObj.getMinutes() + ':'
+									  	+ dateObj.getSeconds();
+				$scope.newItem.picPath = entry.toLocalURL();
+				var keyName = $scope.newItem.date;
+				var value = JSON.stringify($scope.newItem);
+				plus.storage.setItem(keyName, value);
+				drawerService.updateList();
 			}, function ( e ) {
 				console.log( "读取拍照文件错误："+e.message );
 			} );
@@ -32,12 +83,9 @@ myDrawerApp.controller('listCtrl',['$scope' ,function($scope) {
 	};
 }]);
 
-myDrawerApp.controller('newItemCtrl', ['$scope', function($scope) {
-	$scope.newItem = {
-		"description": "hello"
-	};
-}]);
-
+/**
+ * app route state
+ */
 myDrawerApp.config(function($stateProvider, $urlRouterProvider) {
 	// For any unmatched url, redirect to /state1
   	$urlRouterProvider.otherwise('/list');

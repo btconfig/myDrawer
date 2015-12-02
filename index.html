@@ -13,7 +13,7 @@
 </head>
 <body ng-app="myDrawerApp">
 	<header id="header" ng-controller="mainCtrl">
-		<div id="back" ng-class="{'iback':ifNewItemState}" class="nvbt" ng-click="listItem()"></div>
+		<div id="back" ng-class="{'iback':ifNewItemState}" class="nvbt" ng-click="goTolistPage()"></div>
 		<div class="nvtt">My Drawer</div>
 		<div class="nvbt" ng-show="!ifNewItemState" ng-click="addNewItem()">+</div>
 	</header>
