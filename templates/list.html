@@ -1,12 +1,25 @@
+<header id="header">
+	<div id="back" class="nvbt iback" style="visibility:hidden"></div>
+	<div class="nvtt">My Drawer</div>
+	<div class="nvbt" ng-click="goToNewItemPage()">+</div>
+</header>
 <div id="content" class="content">
-	<table>
-		<tr ng-repeat="item in itemList track by $index">
-			<td>
-				<img class="list-table-img" ng-src="{{item.picPath}}" />			
-			</td>
-			<td class="list-table-description">
-				<p style="padding: 0; margin: 0;">{{item.date}}</p>
-			</td>
-		</tr>
-	</table>
+	<ul class="mui-table-view">
+		<li class="mui-table-view-cell" ng-repeat="item in itemList track by $index">
+			<div class="mui-slider-right mui-disabled" ng-click="deleteItem($index)">
+				<a class="mui-btn mui-btn-red">删除</a>
+			</div>
+			<table class="mui-slider-handle">
+				<tr>
+					<td>
+						<img class="list-table-img" ng-src="{{item.picPath}}" ng-click="previewImage(item.picPath)"/>			
+					</td>
+					<td class="list-table-description">
+						<p style="padding: 0; margin: 0;">{{item.date}}</p>
+						<p style="padding: 0; margin: 0;">{{item.description}}</p>
+					</td>
+				</tr>
+			</table>
+		</li>
+	</ul>
 </div>

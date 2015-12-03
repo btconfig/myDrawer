@@ -32,7 +32,9 @@
  * list.html
  */
 .list-table-img {
-	height: 100px;
+	vertical-align: top;
+	max-height: 100px;
+	max-width: 60px;
 }
 .list-table-description {
 	vertical-align: top;
@@ -40,6 +42,10 @@
 /**
  * newItem.html
  */
+.newItem-td {
+	text-align: center;
+	padding: 10px 10px 0px 10px;
+}
 .newItem-addImg {
 	width: 100%; 
 	border: 1px solid #f1f1f1;
@@ -48,10 +54,7 @@
  * package
  */
 button {
-	border: none;
-	padding: 0;
-	margin: 0;
-	width: 140px;
+	width: 100px;
 	height: 40px;
 }
 /**
