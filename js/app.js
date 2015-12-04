@@ -62,16 +62,18 @@ myDrawerApp.controller('listCtrl',['$scope', '$rootScope', '$timeout', '$state',
 myDrawerApp.controller('newItemCtrl', ['$scope', '$rootScope', '$state', 'drawerService', function($scope, $rootScope, $state, drawerService) {
 	$scope.newItem = {
 		"description": "",
-		"picPath": ""
+		"picPath": "",
+		"picName": ""
 	};
 	$scope.goTolistPage = function () {
 		$state.go('list');
 	};
-	$scope.getPicPath = function() {
+	$scope.getPicName = function() {
 		if ($scope.newItem.picPath === "") {
-			return "./img/plus.png";			
-		}		
-		return $scope.newItem.picPath;		
+			return $scope.newItem.picPath;
+		}
+		var pathArray = $scope.newItem.picPath.split("/");
+		$scope.newItem.picName = pathArray[pathArray.length - 1];
 	};
 	$scope.galleryImg = function (){
 		// 从相册中选择图片
@@ -84,6 +86,7 @@ myDrawerApp.controller('newItemCtrl', ['$scope', '$rootScope', '$state', 'drawer
 							  	+ dateObj.getMinutes() + ':'
 							  	+ dateObj.getSeconds();
 			$scope.newItem.picPath = path;
+			$scope.getPicName();
 			$scope.$apply();
     	}, {filter:"image"} );
     	}, function ( e ) {    		
@@ -92,21 +95,18 @@ myDrawerApp.controller('newItemCtrl', ['$scope', '$rootScope', '$state', 'drawer
 	$scope.getImage = function() {
 		var cmr = plus.camera.getCamera();
 		cmr.captureImage( function ( path ) {
-			plus.gallery.save( path );
-			var dateObj = new Date();
-			$scope.newItem.date = dateObj.getFullYear() + '-'
-							  	+ (dateObj.getMonth() + 1) + '-'
-							  	+ dateObj.getDate() + ' '
-							  	+ dateObj.getHours() + ':'
-							  	+ dateObj.getMinutes() + ':'
-							  	+ dateObj.getSeconds();
-			$scope.newItem.picPath = path;
-			$scope.$apply();
+			plus.gallery.save(path, function() {
+				$scope.galleryImg();
+			});
 		}, function ( e ) {
 		}, {filename:"_doc/gallery/",index:1} );
 	};
 	$scope.save = function() {
-		if ($scope.newItem.picPath != "") {
+		if ($scope.newItem.picPath === "") {
+			plus.nativeUI.toast("还没有选择图片呢！",{duration:"short"});
+		} else if ($scope.newItem.description === "") {
+			plus.nativeUI.toast("还没写描述呢！",{duration:"short"});
+		} else {
 			var keyName = $scope.newItem.date;
 			var value = JSON.stringify($scope.newItem);
 			plus.storage.setItem(keyName, value);

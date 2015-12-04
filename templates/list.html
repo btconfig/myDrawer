@@ -1,7 +1,7 @@
 <header id="header">
-	<div id="back" class="nvbt iback" style="visibility:hidden"></div>
+	<div class="nvbt" style="visibility:hidden"></div>
 	<div class="nvtt">My Drawer</div>
-	<div class="nvbt" ng-click="goToNewItemPage()">+</div>
+	<img ng-click="goToNewItemPage()" style="vertical-align: middle;" src="./img/plus.png"/>
 </header>
 <div id="content" class="content">
 	<ul class="mui-table-view">
@@ -11,10 +11,10 @@
 			</div>
 			<table class="mui-slider-handle">
 				<tr>
-					<td>
+					<td class="list-table-imgTd">
 						<img class="list-table-img" ng-src="{{item.picPath}}" ng-click="previewImage(item.picPath)"/>			
 					</td>
-					<td class="list-table-description">
+					<td class="list-table-descriptionTd">
 						<p style="padding: 0; margin: 0;">{{item.date}}</p>
 						<p style="padding: 0; margin: 0;">{{item.description}}</p>
 					</td>
